@@ -15,7 +15,7 @@ public class Payroll {
         String filePath = scanner.nextLine();
 
         loadEmployeesFromFile(filePath);
-        printPayroll();
+        writeToFile();
     }
 
     private void loadEmployeesFromFile(String fileName) {
@@ -48,6 +48,30 @@ public class Payroll {
 
         for (Employee e : employees) {
             System.out.printf("%-5d %-20s $%.2f%n", e.getEmployeeID(), e.getName(), e.getGrossPay());
+        }
+
+    }
+
+    public void writeToFile() {
+
+        try {
+            // create a FileWriter
+            FileWriter fileWriter = new FileWriter("employee.csv", true);
+            // create a BufferedWriter
+            BufferedWriter bufWriter = new BufferedWriter(fileWriter);
+            // write to the file
+            String text;
+           // for (int i = 1; i <= 10; i++) { old code
+            for (Employee e: employees) {
+                text = String.format(e.getName());
+                bufWriter.write("\n" + text);
+            }
+            // close the writer
+            bufWriter.close();
+        } catch (IOException e) {
+            System.out.println("ERROR:  An unexpected error occurred");
+            e.getStackTrace();
+
         }
     }
 }
